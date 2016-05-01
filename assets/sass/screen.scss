@@ -1,0 +1,84 @@
+@import "compass/reset";
+@import "compass/css3";
+@import 'mixins';
+
+$image_root: "../imagess/";
+
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+* html .clearfix             { zoom: 2; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+html, html a {
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+  position: relative;
+  padding-right: 0px !important;
+  overflow-x: hidden;
+
+  .form-control {
+    &.error {
+      border-color: $red;
+    }
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .cc_card_type {
+    display: none;
+    position: absolute;
+    top: 13px;
+    right: 10px;
+    &.active {
+      display: block;
+    }
+  }
+
+  .payment_form {
+    .row {
+      margin-bottom: 15px;
+      &:last-child {
+        margin-bottom: 0px;
+      }
+    }
+    .payment_process_loader {
+      display: none;
+      font-size: 14px;
+      line-height: 34px;
+      span {
+        &:first-child {
+          margin-right: 5px;
+        }
+      }
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+}
