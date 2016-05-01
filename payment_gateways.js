@@ -96,7 +96,7 @@ module.exports = {
                 payment_log_data.mongo_status = true;
                 payment_log_data.mongo_msg = "Payment log created successfully!";
               } else {
-                payment_log_data.mongo_msg = 'Server error during payment log creation';
+                payment_log_data.mongo_msg = error;
               }
               cbAsync(payment_log_data);
             });
