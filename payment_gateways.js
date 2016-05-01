@@ -52,7 +52,7 @@ module.exports = {
           if (error) {
             if(error.response.httpStatusCode == 503) {
               // payment_log_data.msg = error.response.name;
-              payment_log_data.msg = "Invalid credit card credentials";
+              payment_log_data.msg = "Paypal: Invalid credit card credentials";
             } else {
               paypal_error_msg = "";
               ref = error.response.details;
@@ -60,11 +60,11 @@ module.exports = {
                 pe_msg = ref[i];
                 paypal_error_msg += pe_msg.issue + ".";
               }
-              payment_log_data.msg = paypal_error_msg;
+              payment_log_data.msg = "Paypal: " + paypal_error_msg;
             }
           } else {
             payment_log_data.status = true;
-            payment_log_data.msg = 'Success transaction!';
+            payment_log_data.msg = 'Paypal: Success transaction!';
             payment_log_data.payment_response = payment;
           }
           cbAsync(null, payment_log_data);
@@ -117,11 +117,11 @@ module.exports = {
         }, function (error, payment) {
           if(payment.success) {
             payment_log_data.status = true;
-            payment_log_data.msg = 'Success transaction!';
+            payment_log_data.msg = 'Braintree: Success transaction!';
             payment_log_data.payment_order_info = "";
             payment_log_data.payment_response = payment;
           } else {
-            payment_log_data.msg = payment.message;
+            payment_log_data.msg = "Braintree: " + payment.message;
           }
           cbAsync(null, payment_log_data);
         });

@@ -83,7 +83,6 @@ class Payments
       client = new braintree.api.Client
         clientToken: client_token
       client.tokenizeCard card, (error, nonce) ->
-        console.log nonce
         unless error
           send_data =
             amount: cc_data.amount

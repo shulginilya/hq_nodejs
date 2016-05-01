@@ -1,7 +1,10 @@
+var app_config = require("../config/application");
 var request = require("request");
 var headers = {
   'Content-Type': 'application/json'
 };
+
+var baseUrl = app_config.protocol + "://" + app_config.host + ":" + app_config.port;
 
 var runTestSuite = module.exports.runTestSuite = function() {
   describe("Payment Gateways", function() {
@@ -21,7 +24,7 @@ var runTestSuite = module.exports.runTestSuite = function() {
       };
       this.timeout(10000); // ==== TODO: figure out how to avoid timeout usage
       request({
-        url: "http://localhost:3000/payment_gateway_paypal",
+        url: baseUrl + "/payment_gateway_paypal",
         method: "POST",
         headers: headers,
         body: JSON.stringify(send_data)
@@ -40,7 +43,7 @@ var runTestSuite = module.exports.runTestSuite = function() {
       };
       this.timeout(10000); // ==== TODO: figure out how to avoid timeout usage
       request({
-        url: "http://localhost:3000/payment_gateway_braintree",
+        url: baseUrl + "/payment_gateway_braintree",
         method: "POST",
         headers: headers,
         body: JSON.stringify(send_data)

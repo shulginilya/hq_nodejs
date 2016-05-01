@@ -1,3 +1,5 @@
+var app_config = require("./config/application");
+
 // ==== libs injection
 var payment_gateways = require("./payment_gateways");
 
@@ -10,8 +12,8 @@ app.set('view engine', 'pug');
 app.use(express.static('assets'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.listen(3000, function () {
-  console.log('app is listening on port 3000');
+app.listen(app_config.port, function () {
+  console.log('app is listening on port ' + app_config.port);
 });
 
 // ==== landing page

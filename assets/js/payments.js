@@ -127,7 +127,6 @@ Payments = (function() {
       });
       return client.tokenizeCard(card, function(error, nonce) {
         var send_data;
-        console.log(nonce);
         if (!error) {
           send_data = {
             amount: cc_data.amount,
