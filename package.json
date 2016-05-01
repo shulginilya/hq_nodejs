@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "hotelquickly HQ test assignment",
   "author": "Shulgin Ilya",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shulginilya/hq_nodejs.git"
+  },
   "dependencies": {
     "express": "4.13.x",
     "body-parser": "1.15.x",
