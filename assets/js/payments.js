@@ -90,13 +90,13 @@ Payments = (function() {
     this._deactivateLoader();
     if (response_data.status) {
       toastr.success("" + response_data.msg);
+      if (!response_data.mongo_status) {
+        return toastr.error("" + response_data.mongo_msg);
+      } else {
+        return toastr.success("" + response_data.mongo_msg);
+      }
     } else {
-      toastr.error("" + response_data.msg);
-    }
-    if (!response_data.mongo_status) {
-      return toastr.error("" + response_data.mongo_msg);
-    } else {
-      return toastr.success("" + response_data.mongo_msg);
+      return toastr.error("" + response_data.msg);
     }
   };
 
@@ -127,6 +127,7 @@ Payments = (function() {
       });
       return client.tokenizeCard(card, function(error, nonce) {
         var send_data;
+        console.log(nonce);
         if (!error) {
           send_data = {
             amount: cc_data.amount,

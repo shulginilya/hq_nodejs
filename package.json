@@ -14,7 +14,11 @@
     "async": "1.5.x",
     "paypal-rest-sdk": "1.6.x",
     "braintree": "1.x.x",
-    "pug": "0.1.x"
+    "pug": "0.1.x",
+    "mocha": "2.x.x",
+    "should": "8.x.x",
+    "request": "*",
+    "chai": "*"
   },
   "engines": {
     "node": ">= 0.10.0"

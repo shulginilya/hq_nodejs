@@ -51,7 +51,8 @@ module.exports = {
           var i, len, paypal_error_msg, pe_msg, ref;
           if (error) {
             if(error.response.httpStatusCode == 503) {
-              payment_log_data.msg = error.response.name;
+              // payment_log_data.msg = error.response.name;
+              payment_log_data.msg = "Invalid credit card credentials";
             } else {
               paypal_error_msg = "";
               ref = error.response.details;
@@ -71,18 +72,22 @@ module.exports = {
       }, databaseSave = function(res, cbAsync) {
         // === optional mongo saver
         if(db_models.is_connect) {
-          var payments_inject = new db_models.payments_model();
-          payments_inject.source = 'paypal';
-          payments_inject.payment_info = payment_log_data.payment_response;
-          payments_inject.save(function(error, save_obj) {
-            if (!error) {
-              payment_log_data.mongo_status = true;
-              payment_log_data.mongo_msg = "Payment log created successfully!";
-            } else {
-              payment_log_data.mongo_msg = 'Server error during payment log creation';
-            }
+          if(payment_log_data.status) {
+            var payments_inject = new db_models.payments_model();
+            payments_inject.source = 'paypal';
+            payments_inject.payment_info = payment_log_data.payment_response;
+            payments_inject.save(function(error, save_obj) {
+              if (!error) {
+                payment_log_data.mongo_status = true;
+                payment_log_data.mongo_msg = "Payment log created successfully!";
+              } else {
+                payment_log_data.mongo_msg = 'Server error during payment log creation';
+              }
+              cbAsync(payment_log_data);
+            });
+          } else {
             cbAsync(payment_log_data);
-          });
+          }
         } else {
           payment_log_data.mongo_msg = 'Connection to mongo is not established';
           cbAsync(payment_log_data);
@@ -123,18 +128,22 @@ module.exports = {
       }, databaseSave = function(res, cbAsync) {
         // === optional mongo saver
         if(db_models.is_connect) {
-          var payments_inject = new db_models.payments_model();
-          payments_inject.source = 'braintree';
-          payments_inject.payment_info = payment_log_data.payment_response;
-          payments_inject.save(function(error, save_obj) {
-            if (!error) {
-              payment_log_data.mongo_status = true;
-              payment_log_data.mongo_msg = "Payment log created successfully!";
-            } else {
-              payment_log_data.mongo_msg = 'Server error during payment log creation';
-            }
+          if(payment_log_data.status) {
+            var payments_inject = new db_models.payments_model();
+            payments_inject.source = 'braintree';
+            payments_inject.payment_info = payment_log_data.payment_response;
+            payments_inject.save(function(error, save_obj) {
+              if (!error) {
+                payment_log_data.mongo_status = true;
+                payment_log_data.mongo_msg = "Payment log created successfully!";
+              } else {
+                payment_log_data.mongo_msg = 'Server error during payment log creation';
+              }
+              cbAsync(payment_log_data);
+            });
+          } else {
             cbAsync(payment_log_data);
-          });
+          }
         } else {
           payment_log_data.mongo_msg = 'Connection to mongo is not established';
           cbAsync(payment_log_data);

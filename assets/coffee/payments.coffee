@@ -59,12 +59,12 @@ class Payments
     @_deactivateLoader()
     if response_data.status
       toastr.success "#{response_data.msg}"
+      unless response_data.mongo_status
+        toastr.error "#{response_data.mongo_msg}"
+      else
+        toastr.success "#{response_data.mongo_msg}"
     else
       toastr.error "#{response_data.msg}"
-    unless response_data.mongo_status
-      toastr.error "#{response_data.mongo_msg}"
-    else
-      toastr.success "#{response_data.mongo_msg}"
   @_requestPaypalPayment: (send_data) ->
     @_activateLoader()
     me = @
@@ -83,6 +83,7 @@ class Payments
       client = new braintree.api.Client
         clientToken: client_token
       client.tokenizeCard card, (error, nonce) ->
+        console.log nonce
         unless error
           send_data =
             amount: cc_data.amount

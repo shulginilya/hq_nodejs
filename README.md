@@ -10,3 +10,5 @@
 4111111111111111
 123
 10/2018
+7. in order to use tests, install mocha globally, "sudo npm install -g mocha"
+8. from /tests folder run "mocha all" (make sure that server is running then you run the tests)
