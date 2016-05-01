@@ -24,11 +24,14 @@ Payments = (function() {
       repeat: 3,
       greedy: false
     });
-    return $("#cc_number").inputmask({
+    $("#cc_number").inputmask({
       mask: '9',
       repeat: 16,
       greedy: false
     });
+    $("#cc_amount").inputmask("9{*}");
+    $("#cc_fullname").inputmask("a{*} a{*}");
+    return $("#cc_holder_name").inputmask("a{*} a{*}");
   };
 
   Payments._activateLoader = function() {
@@ -48,6 +51,14 @@ Payments = (function() {
     v_errors = [];
     card_type = '';
     is_valid_cardnumber = $.payform.validateCardNumber(cc_data.number);
+    if (cc_data.amount === '') {
+      mid_error = {
+        id: "cc_amount",
+        type: "card_amount",
+        msg: "Amount can't be empty"
+      };
+      v_errors.push(mid_error);
+    }
     if (is_valid_cardnumber) {
       card_type = $.payform.parseCardType(cc_data.number);
     } else {

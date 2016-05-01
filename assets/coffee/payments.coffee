@@ -15,6 +15,9 @@ class Payments
       mask: '9'
       repeat: 16
       greedy: false
+    $("#cc_amount").inputmask "9{*}"
+    $("#cc_fullname").inputmask "a{*} a{*}"
+    $("#cc_holder_name").inputmask "a{*} a{*}"
   @_activateLoader: ->
     $("#sbm_button").addClass 'disabled'
     $("#sbm_button").prop 'disabled', true
@@ -27,6 +30,12 @@ class Payments
     v_errors = []
     card_type = ''
     is_valid_cardnumber = $.payform.validateCardNumber cc_data.number
+    if cc_data.amount is ''
+      mid_error =
+        id: "cc_amount"
+        type: "card_amount"
+        msg: "Amount can't be empty"
+      v_errors.push mid_error
     if is_valid_cardnumber
       card_type = $.payform.parseCardType cc_data.number
     else

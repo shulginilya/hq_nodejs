@@ -21,6 +21,15 @@ module.exports = {
       payRequest = function(cbAsync) {
         paypal_rest_sdk.configure(paypal_config);
         var expire_arr = credit_card_data.expire.split("/");
+        var fname = "";
+        var lname = "";
+        if(credit_card_data.holder_name !== "") {
+          var holder_arr = credit_card_data.holder_name.split(" ");
+          fname = holder_arr[0];
+          if(typeof(holder_arr[1]) !== 'undefined') {
+            lname = holder_arr[1];
+          }
+        }
         var payment_details = {
           'intent': 'sale',
           'payer': {
@@ -47,6 +56,12 @@ module.exports = {
             }
           ]
         };
+        if(fname !== "") {
+          payment_details.payer.funding_instruments[0].credit_card.first_name = fname;
+        }
+        if(lname !== "") {
+          payment_details.payer.funding_instruments[0].credit_card.last_name = lname;
+        }
         paypal_rest_sdk.payment.create(payment_details, function(error, payment) {
           var i, len, paypal_error_msg, pe_msg, ref;
           if (error) {
